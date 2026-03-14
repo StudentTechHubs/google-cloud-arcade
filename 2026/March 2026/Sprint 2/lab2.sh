@@ -21,7 +21,7 @@ clear
 
 # Welcome message
 echo "${BLUE_TEXT}${BOLD_TEXT}==============================================${RESET_FORMAT}"
-echo "${BLUE_TEXT}${BOLD_TEXT}      CAMPUSPERKS LAB SCRIPT EXECUTION        ${RESET_FORMAT}"
+echo "${BLUE_TEXT}${BOLD_TEXT}      STUDENTTECHHUB LAB SCRIPT EXECUTION        ${RESET_FORMAT}"
 echo "${BLUE_TEXT}${BOLD_TEXT}==============================================${RESET_FORMAT}"
 echo
 
@@ -156,5 +156,5 @@ echo "${GREEN_TEXT}${BOLD_TEXT}              LAB COMPLETED SUCCESSFULLY!        
 echo "${GREEN_TEXT}${BOLD_TEXT}=======================================================${RESET_FORMAT}"
 
 echo
-echo "${GREEN_TEXT}${BOLD_TEXT}${UNDERLINE_TEXT}https://www.youtube.com/@CampusPerkss${RESET_FORMAT}"
-echo "${CYAN_TEXT}${BOLD_TEXT}Subscribe to CampusPerks for more Google Cloud Arcade Labs${RESET_FORMAT}"
+echo "${GREEN_TEXT}${BOLD_TEXT}${UNDERLINE_TEXT}https://www.youtube.com/@StudentTechHubs${RESET_FORMAT}"
+echo "${CYAN_TEXT}${BOLD_TEXT}Subscribe to STUDENTTECHHUBS for more Google Cloud Arcade Labs${RESET_FORMAT}"
