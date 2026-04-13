@@ -25,7 +25,7 @@ REVERSE_TEXT=$'\033[7m'
 clear
 
 echo "${CYAN_TEXT}${BOLD_TEXT}==================================================================${RESET_FORMAT}"
-echo "${CYAN_TEXT}${BOLD_TEXT}      SUBSCRIBE TECH & CODE- INITIATING EXECUTION...  ${RESET_FORMAT}"
+echo "${CYAN_TEXT}${BOLD_TEXT}      Welcome to PerkVerse - INITIATING EXECUTION...  ${RESET_FORMAT}"
 echo "${CYAN_TEXT}${BOLD_TEXT}==================================================================${RESET_FORMAT}"
 echo
 
@@ -45,7 +45,7 @@ export REGION=$(gcloud compute project-info describe --format="value(commonInsta
 # ------------------------------------------------------
 echo "${GREEN_TEXT}${BOLD_TEXT}👉 Creating VPC Network vpc-net...${RESET_FORMAT}"
 # ------------------------------------------------------
-gcloud compute networks create vpc-net --project=$DEVSHELL_PROJECT_ID --description="Subscribe to Dr. Abhishek's YouTube Channel" --subnet-mode=custom
+gcloud compute networks create vpc-net --project=$DEVSHELL_PROJECT_ID --description="Subscribe to PerkVerse (@PerkVers)" --subnet-mode=custom
 
 
 # ------------------------------------------------------
@@ -166,5 +166,5 @@ echo "${CYAN_TEXT}${BOLD_TEXT}==================================================
 echo "${CYAN_TEXT}${BOLD_TEXT}              LAB COMPLETED SUCCESSFULLY!              ${RESET_FORMAT}"
 echo "${CYAN_TEXT}${BOLD_TEXT}=======================================================${RESET_FORMAT}"
 echo
-echo "${RED_TEXT}${BOLD_TEXT}${UNDERLINE_TEXT}https://www.youtube.com/@TechCode9${RESET_FORMAT}"
-echo "${GREEN_TEXT}${BOLD_TEXT}Don't forget to Like, Share and Subscribe for more Videos${RESET_FORMAT}"
+echo "${RED_TEXT}${BOLD_TEXT}${UNDERLINE_TEXT}https://www.youtube.com/@PerkVers${RESET_FORMAT}"
+echo "${GREEN_TEXT}${BOLD_TEXT}Don't forget to Like, Share and Subscribe to PerkVerse 🚀${RESET_FORMAT}"
