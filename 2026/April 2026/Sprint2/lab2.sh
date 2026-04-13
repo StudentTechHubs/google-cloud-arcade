@@ -21,14 +21,14 @@ clear
 
 # Welcome message
 echo "${CYAN_TEXT}${BOLD_TEXT}==================================================================${RESET_FORMAT}"
-echo "${CYAN_TEXT}${BOLD_TEXT}      SUBSCRIBE STUDENTTECHHUB - INITIATING EXECUTION...  ${RESET_FORMAT}"
+echo "${CYAN_TEXT}${BOLD_TEXT}      SUBSCRIBE PERKVERSE - INITIATING EXECUTION...  ${RESET_FORMAT}"
 echo "${CYAN_TEXT}${BOLD_TEXT}==================================================================${RESET_FORMAT}"
 echo
 
 gcloud auth login --quiet
 
 # Step 1: Set Compute Zone & Region
-echo "${BOLD_TEXT}${BLUE_TEXT}Setting Compute Zone & Region${RESET_FORMAT}"
+echo "${BOLD}${BLUE}Setting Compute Zone & Region${RESET}"
 export ZONE=$(gcloud compute project-info describe \
 --format="value(commonInstanceMetadata.items[google-compute-default-zone])")
 
@@ -36,40 +36,40 @@ export REGION=$(gcloud compute project-info describe \
 --format="value(commonInstanceMetadata.items[google-compute-default-region])")
 
 # Step 2: Configure Compute Settings
-echo "${BOLD_TEXT}${MAGENTA_TEXT}Configuring Compute Settings${RESET_FORMAT}"
+echo "${BOLD}${MAGENTA}Configuring Compute Settings${RESET}"
 gcloud config set compute/region $REGION
 gcloud config set compute/zone $ZONE
 
 # Step 3: Create lab-1 Instance
-echo "${BOLD_TEXT}${YELLOW_TEXT}Creating lab-1 VM instance${RESET_FORMAT}"
+echo "${BOLD}${YELLOW}Creating lab-1 VM instance${RESET}"
 gcloud compute instances create lab-1 --zone $ZONE --machine-type=e2-standard-2
 
 # Step 4: Choose a new zone in the same region
-echo "${BOLD_TEXT}${GREEN_TEXT}Selecting a new zone in same region${RESET_FORMAT}"
+echo "${BOLD}${GREEN}Selecting a new zone in same region${RESET}"
 export NEWZONE=$(gcloud compute zones list --filter="name~'^$REGION'" \
   --format="value(name)" | grep -v "^$ZONE$" | head -n 1)
 
 # Step 5: Set new zone in gcloud config
-echo "${BOLD_TEXT}${RED_TEXT}Setting new zone in gcloud config${RESET_FORMAT}"
+echo "${BOLD}${RED}Setting new zone in gcloud config${RESET}"
 gcloud config set compute/zone $NEWZONE
 
 # Function to prompt user to check their progress
 function check_progress {
     while true; do
         echo
-        echo -n "${BOLD_TEXT}${YELLOW_TEXT}Have you checked your progress for Task 1 ? (Y/N): ${RESET_FORMAT}"
+        echo -n "${BOLD}${YELLOW}Have you checked your progress for Task 1 ? (Y/N): ${RESET}"
         read -r user_input
         if [[ "$user_input" == "Y" || "$user_input" == "y" ]]; then
             echo
-            echo "${BOLD_TEXT}${GREEN_TEXT}Great! Proceeding to the next steps...${RESET_FORMAT}"
+            echo "${BOLD}${GREEN}Great! Proceeding to the next steps...${RESET}"
             echo
             break
         elif [[ "$user_input" == "N" || "$user_input" == "n" ]]; then
             echo
-            echo "${BOLD_TEXT}${RED_TEXT}Please check your progress for Task 1 and then press Y to continue.${RESET_FORMAT}"
+            echo "${BOLD}${RED}Please check your progress for Task 1 and then press Y to continue.${RESET}"
         else
             echo
-            echo "${BOLD_TEXT}${MAGENTA_TEXT}Invalid input. Please enter Y or N.${RESET_FORMAT}"
+            echo "${BOLD}${MAGENTA}Invalid input. Please enter Y or N.${RESET}"
         fi
     done
 }
@@ -77,44 +77,44 @@ function check_progress {
 check_progress
 
 # Step 6: Create a new gcloud config for user2
-echo "${BOLD_TEXT}${BLUE_TEXT}Creating a new gcloud config for user2${RESET_FORMAT}"
+echo "${BOLD}${BLUE}Creating a new gcloud config for user2${RESET}"
 gcloud config configurations create user2 --quiet
 
 # Step 7: Authenticate user2
-echo "${BOLD_TEXT}${YELLOW_TEXT}Authenticating user2${RESET_FORMAT}"
+echo "${BOLD}${YELLOW}Authenticating user2${RESET}"
 gcloud auth login --no-launch-browser --quiet
 
-# Step 8: Set default project/zone/region for user2
-echo "${BOLD_TEXT}${MAGENTA_TEXT}Setting project, zone, region for user2${RESET_FORMAT}"
+# Step 8
+echo "${BOLD}${MAGENTA}Setting project, zone, region for user2${RESET}"
 gcloud config set project $(gcloud config get-value project --configuration=default) --configuration=user2
 gcloud config set compute/zone $(gcloud config get-value compute/zone --configuration=default) --configuration=user2
 gcloud config set compute/region $(gcloud config get-value compute/region --configuration=default) --configuration=user2
 
-# Step 9: Switch back to default config
-echo "${BOLD_TEXT}${GREEN_TEXT}Switching back to default config${RESET_FORMAT}"
+# Step 9
+echo "${BOLD}${GREEN}Switching back to default config${RESET}"
 gcloud config configurations activate default
 
-# Step 10: Install dependencies
-echo "${BOLD_TEXT}${RED_TEXT}Installing epel-release and jq${RESET_FORMAT}"
+# Step 10
+echo "${BOLD}${RED}Installing epel-release and jq${RESET}"
 sudo yum -y install epel-release
 sudo yum -y install jq
 
 echo
 
-# Step 11: Prompt for input values and export
-echo "${BOLD_TEXT}${CYAN_TEXT}Prompting for PROJECTID2, USERID2, and ZONE2${RESET_FORMAT}"
+# Step 11
+echo "${BOLD}${CYAN}Prompting for PROJECTID2, USERID2, and ZONE2${RESET}"
 echo
 
 get_and_export_values() {
-echo -n "${BOLD_TEXT}${BLUE_TEXT}Enter the PROJECTID2: ${RESET_FORMAT}"
+echo -n "${BOLD}${BLUE}Enter the PROJECTID2: ${RESET}"
 read PROJECTID2
 echo
 
-echo -n "${BOLD_TEXT}${MAGENTA_TEXT}Enter the USERID2: ${RESET_FORMAT}"
+echo -n "${BOLD}${MAGENTA}Enter the USERID2: ${RESET}"
 read USERID2
 echo
 
-echo -n "${BOLD_TEXT}${CYAN_TEXT}Enter the ZONE2: ${RESET_FORMAT}"
+echo -n "${BOLD}${CYAN}Enter the ZONE2: ${RESET}"
 read ZONE2
 echo
 
@@ -131,67 +131,80 @@ get_and_export_values
 
 echo
 
-# Step 12: Grant viewer role to user2
-echo "${BOLD_TEXT}${YELLOW_TEXT}Granting viewer role to user2${RESET_FORMAT}"
+# Step 12
+echo "${BOLD}${YELLOW}Granting viewer role to user2${RESET}"
 . ~/.bashrc
 gcloud projects add-iam-policy-binding $PROJECTID2 --member user:$USERID2 --role=roles/viewer
 
-# Step 13: Switch to user2 config
-echo "${BOLD_TEXT}${MAGENTA_TEXT}Switching to user2 config${RESET_FORMAT}"
+# Step 13
+echo "${BOLD}${MAGENTA}Switching to user2 config${RESET}"
 gcloud config configurations activate user2
 
-# Step 14: Set project for user2
-echo "${BOLD_TEXT}${GREEN_TEXT}Setting project for user2${RESET_FORMAT}"
+# Step 14
+echo "${BOLD}${GREEN}Setting project for user2${RESET}"
 gcloud config set project $PROJECTID2
 
-# Step 15: Switch to default config again
-echo "${BOLD_TEXT}${RED_TEXT}Switching to default config${RESET_FORMAT}"
+echo "${BOLD}${RED}Switching to default config${RESET}"
 gcloud config configurations activate default
 
-# Step 16: Create custom role devops
-echo "${BOLD_TEXT}${CYAN_TEXT}Creating custom IAM role 'devops'${RESET_FORMAT}"
+# Step 15
+echo "${BOLD}${CYAN}Creating custom IAM role 'devops'${RESET}"
 gcloud iam roles create devops --project $PROJECTID2 --permissions "compute.instances.create,compute.instances.delete,compute.instances.start,compute.instances.stop,compute.instances.update,compute.disks.create,compute.subnetworks.use,compute.subnetworks.useExternalIp,compute.instances.setMetadata,compute.instances.setServiceAccount"
 
-# Step 17: Assign roles to user2
-echo "${BOLD_TEXT}${BLUE_TEXT}Assigning IAM roles to user2${RESET_FORMAT}"
+# Step 16
+echo "${BOLD}${BLUE}Assigning IAM roles to user2${RESET}"
 gcloud projects add-iam-policy-binding $PROJECTID2 --member user:$USERID2 --role=roles/iam.serviceAccountUser
 gcloud projects add-iam-policy-binding $PROJECTID2 --member user:$USERID2 --role=projects/$PROJECTID2/roles/devops
 
-# Step 18: Switch to user2 config again
-echo "${BOLD_TEXT}${YELLOW_TEXT}Switching to user2 config${RESET_FORMAT}"
+# Step 17
+echo "${BOLD}${YELLOW}Switching to user2 config${RESET}"
 gcloud config configurations activate user2
 
-# Step 19: Create lab-2 instance
-echo "${BOLD_TEXT}${MAGENTA_TEXT}Creating lab-2 VM instance${RESET_FORMAT}"
+# Step 18
+echo "${BOLD}${MAGENTA}Creating lab-2 VM instance${RESET}"
 gcloud compute instances create lab-2 --zone $ZONE2 --machine-type=e2-standard-2
 
-# Step 20: Switch to default config
-echo "${BOLD_TEXT}${GREEN_TEXT}Switching to default config${RESET_FORMAT}"
+# Step 19
+echo "${BOLD}${GREEN}Switching to default config${RESET}"
 gcloud config configurations activate default
 
-# Step 21: Set project to PROJECTID2
-echo "${BOLD_TEXT}${RED_TEXT}Setting project to PROJECTID2${RESET_FORMAT}"
+# Step 20
+echo "${BOLD}${RED}Setting project to PROJECTID2${RESET}"
 gcloud config set project $PROJECTID2
 
-# Step 22: Create service account named devops
-echo "${BOLD_TEXT}${CYAN_TEXT}Creating service account 'devops'${RESET_FORMAT}"
+# Step 21
+echo "${BOLD}${CYAN}Creating service account 'devops'${RESET}"
 gcloud iam service-accounts create devops --display-name devops || true
 
-# Step 23: Get service account email
-echo "${BOLD_TEXT}${BLUE_TEXT}Retrieving service account email${RESET_FORMAT}"
+# Step 22
+echo "${BOLD}${BLUE}Retrieving service account email${RESET}"
 SA=$(gcloud iam service-accounts list --format="value(email)" --filter "displayName=devops")
 
-# Step 24: Grant service account roles
-echo "${BOLD_TEXT}${YELLOW_TEXT}Granting IAM roles to service account${RESET_FORMAT}"
+# Step 23
+echo "${BOLD}${YELLOW}Granting IAM roles to service account${RESET}"
 gcloud projects add-iam-policy-binding $PROJECTID2 --member="serviceAccount:$SA" --role=roles/iam.serviceAccountUser
 gcloud projects add-iam-policy-binding $PROJECTID2 --member="serviceAccount:$SA" --role=roles/compute.instanceAdmin
 
-# Step 25: Create lab-3 instance
-echo "${BOLD_TEXT}${MAGENTA_TEXT}Creating lab-3 VM instance using service account${RESET_FORMAT}"
+# Step 24
+echo "${BOLD}${MAGENTA}Creating lab-3 VM instance using service account${RESET}"
 gcloud compute instances create lab-3 --zone $ZONE2 --machine-type=e2-standard-2 --service-account $SA --scopes "https://www.googleapis.com/auth/compute"
 
 echo
+
 cd
+
+remove_files() {
+    for file in *; do
+        if [[ "$file" == gsp* || "$file" == arc* || "$file" == shell* ]]; then
+            if [[ -f "$file" ]]; then
+                rm "$file"
+                echo "File removed: $file"
+            fi
+        fi
+    done
+}
+
+remove_files
 
 # Final message
 echo
@@ -199,5 +212,5 @@ echo "${CYAN_TEXT}${BOLD_TEXT}==================================================
 echo "${CYAN_TEXT}${BOLD_TEXT}              LAB COMPLETED SUCCESSFULLY!              ${RESET_FORMAT}"
 echo "${CYAN_TEXT}${BOLD_TEXT}=======================================================${RESET_FORMAT}"
 echo
-echo "${RED_TEXT}${BOLD_TEXT}${UNDERLINE_TEXT}https://www.youtube.com/@StudentTechHubs${RESET_FORMAT}"
+echo "${RED_TEXT}${BOLD_TEXT}${UNDERLINE_TEXT}https://www.youtube.com/@PerkVers${RESET_FORMAT}"
 echo "${GREEN_TEXT}${BOLD_TEXT}Don't forget to Like, Share and Subscribe for more Videos${RESET_FORMAT}"
