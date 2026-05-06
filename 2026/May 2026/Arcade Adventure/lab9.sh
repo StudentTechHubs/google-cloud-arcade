@@ -24,7 +24,7 @@ RESET=`tput sgr0`
 clear
 
 echo "${BLUE}${BOLD}====================================================================${RESET}"
-echo "${BLUE}${BOLD}                    PerkVerse Cloud Labs 🚀                         ${RESET}"
+echo "${BLUE}${BOLD}                        PerkVerse Cloud Labs 🚀                     ${RESET}"
 echo "${BLUE}${BOLD}====================================================================${RESET}"
 echo
 echo "${GREEN}${BOLD}Starting Monolith to Microservices Migration Lab${RESET}"
@@ -66,7 +66,7 @@ MONOLITH_IP=$(kubectl get service monolith -o=jsonpath='{.status.loadBalancer.in
 echo "${GREEN}✓ Monolith deployed at: http://$MONOLITH_IP${RESET}"
 echo
 
-# Deploy Orders Microservice
+# Build and deploy orders microservice
 echo "${CYAN}${BOLD}➤ Deploying Orders Microservice${RESET}"
 cd ~/monolith-to-microservices/microservices/src/orders
 gcloud builds submit --tag gcr.io/${PROJECT_ID}/orders:1.0.0 .
@@ -77,7 +77,7 @@ ORDERS_IP=$(kubectl get service orders -o=jsonpath='{.status.loadBalancer.ingres
 echo "${GREEN}✓ Orders service deployed at: http://$ORDERS_IP${RESET}"
 echo
 
-# Update monolith
+# Update monolith configuration
 echo "${CYAN}${BOLD}➤ Updating Monolith Configuration${RESET}"
 cat > ~/monolith-to-microservices/.env.monolith <<EOF
 REACT_APP_ORDERS_URL=http://$ORDERS_IP/api/orders
@@ -90,7 +90,7 @@ kubectl set image deployment/monolith monolith=gcr.io/${PROJECT_ID}/monolith:2.0
 echo "${GREEN}✓ Monolith updated to version 2.0.0${RESET}"
 echo
 
-# Deploy Products Microservice
+# Build and deploy products microservice
 echo "${CYAN}${BOLD}➤ Deploying Products Microservice${RESET}"
 cd ~/monolith-to-microservices/microservices/src/products
 gcloud builds submit --tag gcr.io/${PROJECT_ID}/products:1.0.0 .
